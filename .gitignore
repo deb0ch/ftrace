@@ -19,8 +19,7 @@ core
 vgcore.*
 
 # Executables
-RType_Client
-RType_Server
+ftrace
 *.exe
 *.out
 *.app

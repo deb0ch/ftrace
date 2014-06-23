@@ -5,7 +5,7 @@
 ## Login   <chauvo_t@epitech.net>
 ##
 ## Started on  Tue Apr  1 10:16:12 2014 chauvo_t
-## Last update Fri Jun  6 18:53:13 2014 chauvo_t
+## Last update Mon Jun 23 17:00:35 2014 bourge_i
 ##
 
 CXX			:= gcc
@@ -20,7 +20,7 @@ OBJDIR			:= build
 
 HDRDIR			:= include
 
-SRCS			:=	main.c			\
+SRCS			:=	analyse_elf.c			\
 
 OBJS			:= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 SRCS			:= $(addprefix $(SRCDIR)/, $(SRCS))
@@ -32,7 +32,7 @@ CFLAGS			+= $(addprefix -I./, $(HDRDIR))
 CFLAGS			+= -O0 -MD
 $(DEBUG): CFLAGS	+= -g3 -ggdb
 
-LDFLAGS			+= 
+LDFLAGS			+= -lelf -lbsd
 $(DEBUG): LDFLAGS	+= -g3 -ggdb
 
 TMPS			:=	$(OBJS)			\

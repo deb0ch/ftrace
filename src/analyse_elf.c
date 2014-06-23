@@ -54,9 +54,7 @@ int     main(int argc, char *argv[])
   (void)printf("\n");
 
 # define PRINT_FMT "%-20s 0x%jx\n"
-# define PRINT_FIELD(N) do { \
-    (void)printf(PRINT_FMT, #N, (uintmax_t) ehdr.N); \
-  } while (0)
+# define PRINT_FIELD(N) do { (void)printf(PRINT_FMT, #N, (uintmax_t) ehdr.N); } while (0)
 
   PRINT_FIELD(e_type);
   PRINT_FIELD(e_machine);
@@ -73,9 +71,9 @@ int     main(int argc, char *argv[])
     errx(EX_SOFTWARE, "getshdrstrndx() failed: %s .", elf_errmsg(-1));
   (void)printf(PRINT_FMT, "(shstrndx)", (uintmax_t)n);
 
-  if (elf_getphnum(e, &n) != 0)
-    errx(EX_SOFTWARE, "getphdrnum() failed: %s.", elf_errmsg(-1));
-  (void)printf(PRINT_FMT, "(phnum)", (uintmax_t)n);
+  /* if (elf_getphnum(e, &n) != 0) */
+  /*   errx(EX_SOFTWARE, "getphdrnum() failed: %s.", elf_errmsg(-1)); */
+  /* (void)printf(PRINT_FMT, "(phnum)", (uintmax_t)n); */
   
   (void)elf_end(e);
   (void)close(fd);

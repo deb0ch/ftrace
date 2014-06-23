@@ -1,0 +1,34 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.gch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Core files
+core
+vgcore.*
+
+# Executables
+ftrace
+*.exe
+*.out
+*.app
+
+# Dependency files
+*.d
+
+TAGS
+*/build
+build
+
+/doc/html/

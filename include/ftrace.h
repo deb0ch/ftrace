@@ -5,12 +5,10 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Fri Jun  6 18:50:38 2014 chauvo_t
-** Last update Fri Jun  6 18:50:40 2014 chauvo_t
+** Last update Mon Jun 23 19:53:14 2014 chauvo_t
 */
 
 #ifndef FTRACE_H_
 # define FTRACE_H_
-
-
 
 #endif /* !FTRACE_H_ */

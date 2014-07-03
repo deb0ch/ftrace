@@ -5,7 +5,7 @@
 ## Login   <chauvo_t@epitech.net>
 ##
 ## Started on  Tue Apr  1 10:16:12 2014 chauvo_t
-## Last update Mon Jun 23 17:00:35 2014 bourge_i
+## Last update Thu Jul  3 12:10:36 2014 bourge_i
 ##
 
 CXX			:= gcc
@@ -20,7 +20,17 @@ OBJDIR			:= build
 
 HDRDIR			:= include
 
-SRCS			:=	analyse_elf.c			\
+SRCS			:=	main.c			\
+				graph.c			\
+				graph_utils.c		\
+				print_syscalls.c	\
+				print_types.c		\
+				print_types2.c		\
+				syscalls.c		\
+				trace.c			\
+				launch_child.c		\
+				handle_exit.c		\
+				types.c
 
 OBJS			:= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 SRCS			:= $(addprefix $(SRCDIR)/, $(SRCS))

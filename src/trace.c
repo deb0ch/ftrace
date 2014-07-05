@@ -5,13 +5,14 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Wed May 14 21:58:47 2014 chauvo_t
-** Last update Wed Jul  2 23:31:23 2014 bourge_i
+** Last update Fri Jul  4 14:52:50 2014 chauvo_t
 */
 
 #include "strace.h"
 #include "graph.h"
 
-pid_t	g_tracee_pid = -1;
+pid_t		g_tracee_pid = -1;
+extern t_graph	*g_graph;
 
 extern t_prototype	g_syscalls[];
 
@@ -52,9 +53,8 @@ static int		analyse_syscall(struct user_regs_struct *registers,
 			   g_syscalls[syscall_number].ret_type, registers);
   if (syscall_number == 60 || syscall_number == 231)
     {
-      (void)printf(" was returned by tracee");
-      (void)system("echo -n $?");
-      (void)printf("\n");
+      g_graph->close_graph(g_graph);
+      free_graph(g_graph);
       exit(EXIT_SUCCESS);
     }
   return (SUCCESS);

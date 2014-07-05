@@ -5,14 +5,15 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:47:03 2014 chauvo_t
-** Last update Wed Jul  2 23:47:00 2014 bourge_i
+** Last update Fri Jul  4 14:47:48 2014 chauvo_t
 */
 
 #include "strace.h"
 
 extern pid_t	g_tracee_pid;
+t_graph		*g_graph;
 
-static int	trace_by_pid(pid_t pid, t_graph *graph)
+static int	trace_by_pid(pid_t pid, t_graph *g_graph)
 {
   if (ptrace(PTRACE_ATTACH, pid, NULL, NULL) == -1)
     {
@@ -20,14 +21,14 @@ static int	trace_by_pid(pid_t pid, t_graph *graph)
       return (FAILURE);
     }
   g_tracee_pid = pid;
-  if (trace_process(pid, graph) == FAILURE)
+  if (trace_process(pid, g_graph) == FAILURE)
     return (FAILURE);
   return (SUCCESS);
 }
 
-static int	trace_by_cmd(char **cmd, t_graph *graph)
+static int	trace_by_cmd(char **cmd, t_graph *g_graph)
 {
-  pid_t	child;
+  pid_t		child;
 
   if ((child = fork()) == -1)
     {
@@ -42,7 +43,7 @@ static int	trace_by_cmd(char **cmd, t_graph *graph)
   else
     {
       g_tracee_pid = child;
-      if (trace_process(child, graph) == FAILURE)
+      if (trace_process(child, g_graph) == FAILURE)
       	return (FAILURE);
     }
   return (SUCCESS);
@@ -55,6 +56,8 @@ static void	sig_handler(int signum)
     warn("ptrace PTRACE_DETACH error");
   else
     fprintf(stderr, "successfully detached from %d\n", g_tracee_pid);
+  g_graph->close_graph(g_graph);
+  free_graph(g_graph);
   exit(EXIT_SUCCESS);
 }
 
@@ -72,9 +75,8 @@ int             main(int ac, char **av)
 {
   char          **cmd;
   int   	ret_value;
-  t_graph       *graph;
 
-  graph = graph_init();
+  g_graph = graph_init();
   if ((ret_value = get_args(ac, av, &cmd)) == FAILURE)
     {
       fprintf(stderr, "USAGE:\n%s [command]\n%s [-p [pid]]\n", av[0], av[0]);
@@ -87,11 +89,12 @@ int             main(int ac, char **av)
       return (EXIT_FAILURE);
     }
   if (ret_value == SUCCESS)
-    ret_value = trace_by_cmd(cmd, graph);
+    ret_value = trace_by_cmd(cmd, g_graph);
   else
-    ret_value = trace_by_pid(ret_value, graph);
-  graph->close_graph(graph);
-  free_graph(graph);
+    ret_value = trace_by_pid(ret_value, g_graph);
+  printf("YOLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO !!!");
+  g_graph->close_graph(g_graph);
+  free_graph(g_graph);
   if (ret_value == FAILURE)
     return (EXIT_FAILURE);
   return (EXIT_SUCCESS);

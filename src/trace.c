@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Wed May 14 21:58:47 2014 chauvo_t
-** Last update Sun Jul  6 17:15:56 2014 bourge_i
+** Last update Sun Jul  6 17:32:27 2014 bourge_i
 */
 
 #include "symbol_finder.h"
@@ -141,7 +141,7 @@ int				trace_process(pid_t pid, t_graph *graph)
     }
   while (42)
     {
-      if (map_by_pid(&g_exec_file, pid) == FAILURE)
+      if (map_by_pid(&g_exec_file, g_tracee_pid) == FAILURE)
 	return (FAILURE);
       if (ptrace(PTRACE_GETREGS, pid, NULL, &registers) == -1)
 	{

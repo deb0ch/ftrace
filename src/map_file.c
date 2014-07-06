@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Sun Jul  6 15:34:10 2014 chauvo_t
-** Last update Sun Jul  6 16:59:44 2014 chauvo_t
+** Last update Sun Jul  6 17:34:08 2014 bourge_i
 */
 
 #include "../include/strace.h"
@@ -25,7 +25,7 @@ int	load_file(t_mapped_file *file, char *file_name)
 
   if ((fd = open(file_name, O_RDONLY)) == -1)
     {
-      warn("open error on file %s", file_name);
+      warn("open error YOLO on file %s", file_name);
       return (FAILURE);
     }
   file->size = file_size(fd);
@@ -42,13 +42,17 @@ int	load_file(t_mapped_file *file, char *file_name)
 
 int	map_by_pid(t_mapped_file *file, pid_t pid)
 {
+  char	pathname_symlink[4096];
   char	pathname[4096];
 
-  sprintf(pathname, "/proc/%d/exe", pid);
-  if (readlink(pathname, pathname, 4096) == -1)
+  pathname_symlink[0] = '\0';
+  pathname[0] = '\0';
+  /* sprintf(pathname_symlink, "/proc/%d/exe", pid); */
+  if (readlink(pathname_symlink, pathname, 4096) == -1)
     {
       warn("readlink error");
       return (FAILURE);
     }
+  /* printf("pathname_symlink = %s, pathname = %s\n", pathname_symlink, pathname); */
   return (load_file(file, pathname));
 }

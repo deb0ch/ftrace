@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Sun Jul  6 15:34:10 2014 chauvo_t
-** Last update Sun Jul  6 17:34:08 2014 bourge_i
+** Last update Sun Jul  6 17:59:57 2014 chauvo_t
 */
 
 #include "../include/strace.h"
@@ -19,13 +19,20 @@ static size_t	file_size(int fd)
   return (size);
 }
 
-int	load_file(t_mapped_file *file, char *file_name)
+int		load_file(t_mapped_file *file, char *file_name)
 {
-  int	fd;
+  static t_bool	can_unmap = false;
+  int		fd;
 
+  if (can_unmap && munmap(file->content, file->size) == -1)
+    {
+      warn("munmap error");
+      return (FAILURE);
+    }
+  can_unmap = true;
   if ((fd = open(file_name, O_RDONLY)) == -1)
     {
-      warn("open error YOLO on file %s", file_name);
+      warn("open error on file %s", file_name);
       return (FAILURE);
     }
   file->size = file_size(fd);
@@ -44,15 +51,16 @@ int	map_by_pid(t_mapped_file *file, pid_t pid)
 {
   char	pathname_symlink[4096];
   char	pathname[4096];
+  int	ret;
 
   pathname_symlink[0] = '\0';
   pathname[0] = '\0';
-  /* sprintf(pathname_symlink, "/proc/%d/exe", pid); */
-  if (readlink(pathname_symlink, pathname, 4096) == -1)
+  sprintf(pathname_symlink, "/proc/%d/exe", pid);
+  if ((ret = readlink(pathname_symlink, pathname, 4096)) == -1)
     {
       warn("readlink error");
       return (FAILURE);
     }
-  /* printf("pathname_symlink = %s, pathname = %s\n", pathname_symlink, pathname); */
+  pathname[ret] = '\0';
   return (load_file(file, pathname));
 }

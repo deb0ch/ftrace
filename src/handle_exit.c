@@ -5,41 +5,15 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Fri May 16 19:22:06 2014 chauvo_t
-** Last update Sun Jul  6 15:15:41 2014 chauvo_t
+** Last update Sun Jul  6 21:38:25 2014 chauvo_t
 */
 
+#include "symbol_finder.h"
 #include "strace.h"
 
-extern t_graph	*g_graph;
-
-static void	print_signal(int *status)
-{
-  if (WSTOPSIG(*status) == SIGSEGV)
-    fprintf(stderr, "SIGSEGV\n");
-  else if (WSTOPSIG(*status) == SIGTERM)
-    fprintf(stderr, "SIGTERM\n");
-  else if (WSTOPSIG(*status) == SIGINT)
-    fprintf(stderr, "SIGINT\n");
-  else if (WSTOPSIG(*status) == SIGKILL)
-    fprintf(stderr, "SIGKILL\n");
-  else if (WSTOPSIG(*status) == SIGPIPE)
-    fprintf(stderr, "SIGPIPE\n");
-  else if (WSTOPSIG(*status) == SIGQUIT)
-    fprintf(stderr, "SIGQUIT\n");
-  else if (WSTOPSIG(*status) == SIGFPE)
-    fprintf(stderr, "SIGFPE\n");
-  else if (WSTOPSIG(*status) == SIGBUS)
-    fprintf(stderr, "SIGBUS\n");
-  else if (WSTOPSIG(*status) == SIGSYS)
-    fprintf(stderr, "SIGSYS\n");
-  else if (WSTOPSIG(*status) == SIGSTKFLT)
-    fprintf(stderr, "SIGSTKFLT\n");
-  else if (WSTOPSIG(*status) == SIGABRT)
-    fprintf(stderr, "SIGABRT\n");
-  else if (WSTOPSIG(*status) == SIGUSR1
-	   || WSTOPSIG(*status) == SIGUSR2)
-    fprintf(stderr, "SIGUSR1 / SIGUSR2\n");
-}
+extern t_graph		*g_graph;
+extern t_signal		g_signals[];
+extern t_libelf_data	g_elf_data;
 
 void	handle_exit(int *status)
 {
@@ -58,9 +32,10 @@ void	handle_exit(int *status)
 	    || WSTOPSIG(*status) == SIGUSR1 || WSTOPSIG(*status) == SIGUSR2
 	    || WSTOPSIG(*status) == SIGABRT)))
     return ;
-  fprintf(stderr, "tracee was terminated by default action of signal ");
-  print_signal(status);
+  fprintf(stderr, "tracee was terminated by default action of signal %s\n",
+	  g_signals[WSTOPSIG(*status)].name);
   g_graph->close_graph(g_graph);
+  (void)elf_end(g_elf_data.elf);
   free_graph(g_graph);
   exit(EXIT_SUCCESS);
 }

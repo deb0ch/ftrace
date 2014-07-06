@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:46:57 2014 chauvo_t
-** Last update Sun Jul  6 19:28:17 2014 bourge_i
+** Last update Sun Jul  6 21:03:55 2014 chauvo_t
 */
 
 #ifndef STRACE_H_
@@ -60,6 +60,12 @@ typedef struct	s_mapped_file
   void		*content;
   char          pathname[4096];
 }		t_mapped_file;
+
+typedef struct	s_signal
+{
+  int		nb;
+  char		*name;
+}		t_signal;
 
 /*
 ** handle_exit.c

@@ -5,12 +5,12 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Thu Jun  5 14:43:13 2014 chauvo_t
-** Last update Sun Jul  6 19:15:07 2014 bourge_i
+** Last update Sun Jul  6 21:34:16 2014 chauvo_t
 */
 
 #include "../include/symbol_finder.h"
 
-static t_libelf_data	g_elf_data;
+t_libelf_data	g_elf_data;
 
 static char	*do_find_symbol(long long unsigned address)
 {
@@ -20,7 +20,7 @@ static char	*do_find_symbol(long long unsigned address)
   int		i;
 
   while ((g_elf_data.scn = elf_nextscn(g_elf_data.elf,
-					 g_elf_data.scn)) != NULL)
+				       g_elf_data.scn)) != NULL)
     {
       gelf_getshdr(g_elf_data.scn, &shdr);
       if (shdr.sh_type == SHT_SYMTAB)
@@ -42,6 +42,8 @@ static char	*do_find_symbol(long long unsigned address)
 
 char	*symbol_finder_fd(int fd, long long unsigned address)
 {
+  if (elf_version(EV_CURRENT) == EV_NONE)
+    errx(EX_SOFTWARE, "ELF library initialization failed : %s", elf_errmsg(-1));
   if ((g_elf_data.elf = elf_begin(fd, ELF_C_READ, NULL)) == NULL)
     errx(EX_SOFTWARE, "elf_begin() failed : %s .", elf_errmsg(-1));
   return (do_find_symbol(address));
@@ -50,6 +52,8 @@ char	*symbol_finder_fd(int fd, long long unsigned address)
 char	*symbol_finder_ptr(void* file_ptr, size_t file_size,
 			   long long unsigned address)
 {
+  if (elf_version(EV_CURRENT) == EV_NONE)
+    errx(EX_SOFTWARE, "ELF library initialization failed : %s", elf_errmsg(-1));
   if ((g_elf_data.elf = elf_memory(file_ptr, file_size)) == NULL)
     errx(EX_SOFTWARE, "elf_memory() failed : %s .", elf_errmsg(-1));
   return (do_find_symbol(address));
@@ -97,6 +101,7 @@ char	*symbol_finder_ptr(void* file_ptr, size_t file_size,
 /*   if ((symbol = symbol_finder_ptr(file_ptr, elf_stats.st_size, strtol(av[2], NULL, 16))) != NULL) */
 /*     printf("%s found at 0x%lx\n", symbol, strtol(av[2], NULL, 16)); */
 
+/*   printf("file size = %lu\n", elf_stats.st_size); */
 /*   (void)elf_end(g_elf_data.elf); */
 /*   (void)close(fd); */
 /*   exit(EX_OK); */

@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Wed May 14 21:58:47 2014 chauvo_t
-** Last update Sun Jul  6 19:38:01 2014 bourge_i
+** Last update Sun Jul  6 19:59:24 2014 chauvo_t
 */
 
 #include "symbol_finder.h"
@@ -74,7 +74,8 @@ int                     on_function_call(struct user_regs_struct *registers,
       printf("CALL count : %d\n", count);
       printf("CALL: 0x%llx\n", registers->rip);
       sprintf(buff, "0x%llx", registers->rip);
-      printf("***%s\n", symbol_finder_ptr(g_exec_file.content, g_exec_file.size, registers->rip));
+      printf("***%s\n", symbol_finder_ptr(g_exec_file.content,
+					  g_exec_file.size, registers->rip));
       graph->current = graph->add_node(graph, buff, graph->current, 0);
       *calling = 2;
       return (1);

@@ -5,7 +5,7 @@
 ## Login   <chauvo_t@epitech.net>
 ##
 ## Started on  Tue Apr  1 10:16:12 2014 chauvo_t
-## Last update Sun Jul  6 17:15:31 2014 bourge_i
+## Last update Sun Jul  6 21:14:35 2014 chauvo_t
 ##
 
 CXX			:= gcc
@@ -31,6 +31,7 @@ SRCS			:=	main.c			\
 				trace.c			\
 				launch_child.c		\
 				handle_exit.c		\
+				signals.c		\
 				symbol_finder.c		\
 				types.c
 
@@ -41,7 +42,7 @@ DEPS			:= $(OBJS:.o=.d)
 
 CFLAGS			+= -Wextra -Wall -W
 CFLAGS			+= $(addprefix -I./, $(HDRDIR))
-CFLAGS			+= -O0 -MD
+CFLAGS			+= -MD
 $(DEBUG): CFLAGS	+= -g3 -ggdb
 
 LDFLAGS			+= -lelf

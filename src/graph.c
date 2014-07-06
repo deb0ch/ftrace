@@ -5,7 +5,7 @@
 ** Login   <max@epitech.net>
 ** 
 ** Started on  Fri Jun 27 17:29:42 2014 bourge_i
-** Last update Wed Jul  2 15:05:25 2014 bourge_i
+** Last update Sat Jul  5 22:21:20 2014 bourge_i
 */
 
 #include <stdlib.h>
@@ -54,8 +54,8 @@ int             create_graph(struct s_graph *this)
       printf("FOPEN() failed\n");
       return (-1);
     }
-  fprintf(this->graph_file, "digraph{\n");
-  fprintf(this->graph_file, "node [shape=box, style=filled, color=lightblue];\n");
+  fprintf(this->graph_file, "strict digraph{\n");
+  fprintf(this->graph_file, "node [shape=box, style=rounded, color=lightblue];\n");
   fprintf(this->graph_file, "rankdir=TB;\n");
   fprintf(this->graph_file, "label=\"Ftrace\";\n");
   return(0);

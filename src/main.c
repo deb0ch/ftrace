@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:47:03 2014 chauvo_t
-** Last update Wed Jul  2 23:47:00 2014 bourge_i
+** Last update Sat Jul  5 21:04:58 2014 bourge_i
 */
 
 #include "strace.h"
@@ -74,6 +74,8 @@ int             main(int ac, char **av)
   int   	ret_value;
   t_graph       *graph;
 
+  printf(":::\n%p\n", &main);
+  printf(":::\n%p\n", &get_args);
   graph = graph_init();
   if ((ret_value = get_args(ac, av, &cmd)) == FAILURE)
     {

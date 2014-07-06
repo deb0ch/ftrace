@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:46:57 2014 chauvo_t
-** Last update Wed Jul  2 23:05:17 2014 bourge_i
+** Last update Sun Jul  6 16:39:59 2014 chauvo_t
 */
 
 #ifndef STRACE_H_
@@ -13,10 +13,12 @@
 
 # include <err.h>
 # include <errno.h>
+# include <fcntl.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/mman.h>
 # include <sys/ptrace.h>
 # include <sys/types.h>
 # include <sys/user.h>
@@ -50,6 +52,12 @@ typedef enum
     false = 0,
     true = 1
   }		t_bool;
+
+typedef struct	s_mapped_file
+{
+  size_t	size;
+  void		*content;
+}		t_mapped_file;
 
 /*
 ** handle_exit.c
@@ -90,5 +98,11 @@ void	print_nothing(unsigned long long int register_value);
 ** trace.c
 */
 int	trace_process(pid_t pid, t_graph *graph);
+
+/*
+** Yolo.c
+*/
+int	load_file(t_mapped_file *file, char *file_name);
+int	map_by_pid(t_mapped_file *file, pid_t pid);
 
 #endif /* !STRACE_H_ */

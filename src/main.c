@@ -5,9 +5,10 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:47:03 2014 chauvo_t
-** Last update Fri Jul  4 14:47:48 2014 chauvo_t
+** Last update Sun Jul  6 16:58:01 2014 chauvo_t
 */
 
+#include <stdio.h>
 #include "strace.h"
 
 extern pid_t	g_tracee_pid;
@@ -92,7 +93,6 @@ int             main(int ac, char **av)
     ret_value = trace_by_cmd(cmd, g_graph);
   else
     ret_value = trace_by_pid(ret_value, g_graph);
-  printf("YOLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO !!!");
   g_graph->close_graph(g_graph);
   free_graph(g_graph);
   if (ret_value == FAILURE)

@@ -5,15 +5,15 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Wed May 14 21:58:47 2014 chauvo_t
-** Last update Fri Jul  4 14:52:50 2014 chauvo_t
+** Last update Sun Jul  6 16:59:00 2014 chauvo_t
 */
 
 #include "strace.h"
 #include "graph.h"
 
-pid_t		g_tracee_pid = -1;
-extern t_graph	*g_graph;
-
+pid_t			g_tracee_pid = -1;
+t_mapped_file		g_exec_file;
+extern t_graph		*g_graph;
 extern t_prototype	g_syscalls[];
 
 static int	step_instruction(pid_t pid, int *status)
@@ -95,6 +95,8 @@ int				trace_process(pid_t pid, t_graph *graph)
     }
   while (42)
     {
+      if (map_by_pid(&g_exec_file, pid) == FAILURE)
+	return (FAILURE);
       if (ptrace(PTRACE_GETREGS, pid, NULL, &registers) == -1)
 	{
 	  warn("ptrace PTRACE_GETREGS error");

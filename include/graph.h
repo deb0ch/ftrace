@@ -5,7 +5,7 @@
 ** Login   <max@epitech.net>
 ** 
 ** Started on  Fri Jun 27 17:29:47 2014 bourge_i
-** Last update Wed Jul  2 22:27:48 2014 bourge_i
+** Last update Sun Jul  6 15:19:11 2014 bourge_i
 */
 
 #ifndef _GRAPH_H_
@@ -23,6 +23,7 @@ typedef struct          s_graph_node
 
 typedef struct  s_graph
 {
+  t_graph_node          *current;
   t_graph_node          *graph_list;
   FILE                  *graph_file;
   t_graph_node          *(*add_node)(struct s_graph *, char *, t_graph_node *);

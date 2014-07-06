@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Wed May 14 21:58:47 2014 chauvo_t
-** Last update Sun Jul  6 16:59:00 2014 chauvo_t
+** Last update Sun Jul  6 17:10:33 2014 chauvo_t
 */
 
 #include "strace.h"
@@ -60,25 +60,70 @@ static int		analyse_syscall(struct user_regs_struct *registers,
   return (SUCCESS);
 }
 
+int                     on_function_call(struct user_regs_struct *registers,
+                                         t_graph *graph, int *calling)
+{
+  static int            count = 0;
+  char                  buff[4096];
+
+  if (*calling && ((registers->rip & 0xFF0000000000) != 0x7F0000000000))
+    {
+      count++;
+      printf("CALL count : %d\n", count);
+      printf("CALL: 0x%llx\n", registers->rip);
+      sprintf(buff, "0x%llx", registers->rip);
+      graph->current = graph->add_node(graph, buff, graph->current);
+      *calling = 0;
+      return (1);
+    }
+  *calling = 0;
+  return (0);
+}
+
+int                     on_function_ret(struct user_regs_struct *registers,
+                                        t_graph *graph)
+{
+  static int            count = 0;
+
+  (void)registers;
+  (void)graph;
+  if ((registers->rip & 0xFF) == 0XC3)
+    {
+      count++;
+      printf("RET\n");
+      printf("RET count : %d\n", count);
+      return (1);
+    }
+  return (0);
+}
+
 static int		analyse_registers(struct user_regs_struct *registers,
 					  pid_t pid, int *status, t_graph *graph)
 {
   long			rip_pointed_data;
-  static t_graph_node   *node = NULL;
   unsigned long long	syscall_number;
+  static int            calling = 0;
 
+  on_function_call(registers, graph, &calling);
+  on_function_ret(registers, graph);
   syscall_number = registers->rax;
   if ((rip_pointed_data = ptrace(PTRACE_PEEKDATA, pid,
 				 registers->rip, NULL)) == -1)
     return (FAILURE);
+  if ((rip_pointed_data & 0xFF) == 0xE8
+      && (rip_pointed_data & 0xFF00000000) == 0xFF00000000)
+    calling = 1;
+
   rip_pointed_data &= 0xffff;
   if (rip_pointed_data == SYSCALL_OPCODE)
     {
       if (analyse_syscall(registers, pid, status) == FAILURE)
 	return (FAILURE);
-      printf("RAX : %llu\n", syscall_number);
+      //printf("RAX : %llu\n", syscall_number);
       if (syscall_number < MAX_SYSCALL)
-        node = graph->add_node(graph, g_syscalls[syscall_number].name, node);
+        graph->current =
+          graph->add_node(graph,
+                          g_syscalls[syscall_number].name, graph->current);
     }
   return (SUCCESS);
 }

@@ -5,10 +5,12 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Fri May 16 19:22:06 2014 chauvo_t
-** Last update Sun May 18 20:13:27 2014 chauvo_t
+** Last update Fri Jul  4 14:45:35 2014 chauvo_t
 */
 
 #include "strace.h"
+
+extern t_graph	*g_graph;
 
 static void	print_signal(int *status)
 {
@@ -43,9 +45,9 @@ void	handle_exit(int *status)
 {
   if (WIFEXITED(*status) || WIFSIGNALED(*status))
     {
-      (void)printf(" was returned by tracee");
-      (void)system("echo -n $?");
-      (void)printf("\n");
+      printf("YOLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO !!!");
+      g_graph->close_graph(g_graph);
+      free_graph(g_graph);
       exit(EXIT_SUCCESS);
     }
   if (!(WIFSTOPPED(*status)
@@ -59,5 +61,8 @@ void	handle_exit(int *status)
     return ;
   fprintf(stderr, "tracee was terminated by default action of signal ");
   print_signal(status);
+  printf("YOLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO !!!");
+  g_graph->close_graph(g_graph);
+  free_graph(g_graph);
   exit(EXIT_SUCCESS);
 }

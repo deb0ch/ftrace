@@ -5,7 +5,7 @@
 ** Login   <max@epitech.net>
 ** 
 ** Started on  Fri Jun 27 17:29:42 2014 bourge_i
-** Last update Sat Jul  5 22:21:20 2014 bourge_i
+** Last update Sun Jul  6 15:21:10 2014 bourge_i
 */
 
 #include <stdlib.h>
@@ -34,6 +34,7 @@ t_graph_node            *add_node(struct s_graph *this, char *fct_name, t_graph_
   else
     this->graph_list = node;
   current = node;
+  this->current = node;
   id++;
   return (current);
 }
@@ -73,5 +74,6 @@ t_graph*        graph_init()
   create_graph(graph);
   graph->add_node = &add_node;
   graph->close_graph = &close_graph;
+  graph->current = NULL;
   return (graph);
 }

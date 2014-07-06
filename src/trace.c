@@ -5,13 +5,14 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Wed May 14 21:58:47 2014 chauvo_t
-** Last update Sun Jul  6 12:54:12 2014 bourge_i
+** Last update Sun Jul  6 15:24:58 2014 bourge_i
 */
 
 #include "strace.h"
 #include "graph.h"
 
-pid_t	g_tracee_pid = -1;
+pid_t		g_tracee_pid = -1;
+extern t_graph	*g_graph;
 
 extern t_prototype	g_syscalls[];
 
@@ -52,9 +53,8 @@ static int		analyse_syscall(struct user_regs_struct *registers,
 			   g_syscalls[syscall_number].ret_type, registers);
   if (syscall_number == 60 || syscall_number == 231)
     {
-      (void)printf(" was returned by tracee");
-      (void)system("echo -n $?");
-      (void)printf("\n");
+      g_graph->close_graph(g_graph);
+      free_graph(g_graph);
       exit(EXIT_SUCCESS);
     }
   return (SUCCESS);
@@ -63,7 +63,6 @@ static int		analyse_syscall(struct user_regs_struct *registers,
 int                     on_function_call(struct user_regs_struct *registers,
                                          t_graph *graph, int *calling)
 {
-  static t_graph_node   *node = NULL;
   static int            count = 0;
   char                  buff[4096];
 
@@ -73,7 +72,7 @@ int                     on_function_call(struct user_regs_struct *registers,
       printf("CALL count : %d\n", count);
       printf("CALL: 0x%llx\n", registers->rip);
       sprintf(buff, "0x%llx", registers->rip);
-      node = graph->add_node(graph, buff, node);
+      graph->current = graph->add_node(graph, buff, graph->current);
       *calling = 0;
       return (1);
     }
@@ -103,7 +102,6 @@ static int		analyse_registers(struct user_regs_struct *registers,
 {
   long			rip_pointed_data;
   unsigned long long	syscall_number;
-  static t_graph_node   *node = NULL;
   static int            calling = 0;
 
   on_function_call(registers, graph, &calling);
@@ -121,9 +119,11 @@ static int		analyse_registers(struct user_regs_struct *registers,
     {
       if (analyse_syscall(registers, pid, status) == FAILURE)
 	return (FAILURE);
-      printf("RAX : %llu\n", syscall_number);
+      //printf("RAX : %llu\n", syscall_number);
       if (syscall_number < MAX_SYSCALL)
-        node = graph->add_node(graph, g_syscalls[syscall_number].name, node);
+        graph->current =
+          graph->add_node(graph,
+                          g_syscalls[syscall_number].name, graph->current);
     }
   return (SUCCESS);
 }

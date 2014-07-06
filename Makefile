@@ -5,7 +5,7 @@
 ## Login   <chauvo_t@epitech.net>
 ##
 ## Started on  Tue Apr  1 10:16:12 2014 chauvo_t
-## Last update Thu Jul  3 12:10:36 2014 bourge_i
+## Last update Fri Jul  4 14:26:24 2014 chauvo_t
 ##
 
 CXX			:= gcc
@@ -42,7 +42,7 @@ CFLAGS			+= $(addprefix -I./, $(HDRDIR))
 CFLAGS			+= -O0 -MD
 $(DEBUG): CFLAGS	+= -g3 -ggdb
 
-LDFLAGS			+= -lelf -lbsd
+LDFLAGS			+= -lelf
 $(DEBUG): LDFLAGS	+= -g3 -ggdb
 
 TMPS			:=	$(OBJS)			\

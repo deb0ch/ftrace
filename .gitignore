@@ -32,3 +32,7 @@ TAGS
 build
 
 /doc/html/
+
+#Dotty files
+*.dot
+*.graph

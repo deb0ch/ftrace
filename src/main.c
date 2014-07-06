@@ -5,11 +5,12 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:47:03 2014 chauvo_t
-** Last update Sun Jul  6 17:09:26 2014 chauvo_t
+** Last update Sun Jul  6 19:24:59 2014 bourge_i
 */
 
 #include <stdio.h>
 #include "strace.h"
+#include "symbol_finder.h"
 
 extern pid_t	g_tracee_pid;
 t_graph		*g_graph;
@@ -78,6 +79,8 @@ int             main(int ac, char **av)
   int   	ret_value;
 
   g_graph = graph_init();
+  if (elf_version(EV_CURRENT) == EV_NONE)
+    errx(EX_SOFTWARE, "ELF library initialization failed : %s", elf_errmsg(-1));
   if ((ret_value = get_args(ac, av, &cmd)) == FAILURE)
     {
       fprintf(stderr, "USAGE:\n%s [command]\n%s [-p [pid]]\n", av[0], av[0]);
@@ -95,7 +98,5 @@ int             main(int ac, char **av)
     ret_value = trace_by_pid(ret_value, g_graph);
   g_graph->close_graph(g_graph);
   free_graph(g_graph);
-  if (ret_value == FAILURE)
-    return (EXIT_FAILURE);
-  return (EXIT_SUCCESS);
+  return (ret_value == FAILURE) ? (EXIT_FAILURE) : (EXIT_SUCCESS);
 }

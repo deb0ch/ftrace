@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:46:57 2014 chauvo_t
-** Last update Sun Jul  6 16:39:59 2014 chauvo_t
+** Last update Sun Jul  6 19:28:17 2014 bourge_i
 */
 
 #ifndef STRACE_H_
@@ -55,8 +55,10 @@ typedef enum
 
 typedef struct	s_mapped_file
 {
+  int           fd;
   size_t	size;
   void		*content;
+  char          pathname[4096];
 }		t_mapped_file;
 
 /*

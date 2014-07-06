@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Sun Jul  6 15:34:10 2014 chauvo_t
-** Last update Sun Jul  6 17:59:57 2014 chauvo_t
+** Last update Sun Jul  6 19:28:20 2014 bourge_i
 */
 
 #include "../include/strace.h"
@@ -36,6 +36,7 @@ int		load_file(t_mapped_file *file, char *file_name)
       return (FAILURE);
     }
   file->size = file_size(fd);
+  file->fd = fd;
   if ((file->content = mmap(NULL, file->size, PROT_READ, MAP_SHARED, fd, 0))
       == MAP_FAILED)
     {
@@ -50,17 +51,16 @@ int		load_file(t_mapped_file *file, char *file_name)
 int	map_by_pid(t_mapped_file *file, pid_t pid)
 {
   char	pathname_symlink[4096];
-  char	pathname[4096];
   int	ret;
 
   pathname_symlink[0] = '\0';
-  pathname[0] = '\0';
+  file->pathname[0] = '\0';
   sprintf(pathname_symlink, "/proc/%d/exe", pid);
-  if ((ret = readlink(pathname_symlink, pathname, 4096)) == -1)
+  if ((ret = readlink(pathname_symlink, file->pathname, 4096)) == -1)
     {
       warn("readlink error");
       return (FAILURE);
     }
-  pathname[ret] = '\0';
-  return (load_file(file, pathname));
+  file->pathname[ret] = '\0';
+  return (load_file(file, file->pathname));
 }

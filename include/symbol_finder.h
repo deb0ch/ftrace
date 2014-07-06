@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon Jun 23 17:25:32 2014 chauvo_t
-** Last update Sun Jul  6 15:37:22 2014 bourge_i
+** Last update Sun Jul  6 22:06:59 2014 chauvo_t
 */
 
 #ifndef SYMBOL_FINDER_H_

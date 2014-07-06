@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:47:03 2014 chauvo_t
-** Last update Sun Jul  6 21:30:31 2014 chauvo_t
+** Last update Sun Jul  6 22:18:45 2014 chauvo_t
 */
 
 #include <stdio.h>
@@ -73,9 +73,9 @@ static int	get_args(int ac, char **av, char ***cmd)
   return (SUCCESS);
 }
 
-int             main(int ac, char **av)
+int		main(int ac, char **av)
 {
-  char          **cmd;
+  char		**cmd;
   int   	ret_value;
 
   g_graph = graph_init();

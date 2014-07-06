@@ -1,23 +1,23 @@
 /*
 ** graph.c for ftrace in /home/max/e-wip/ftrace
-** 
+**
 ** Made by bourge_i
 ** Login   <max@epitech.net>
-** 
+**
 ** Started on  Fri Jun 27 17:29:42 2014 bourge_i
-** Last update Sun Jul  6 21:59:16 2014 bourge_i
+** Last update Sun Jul  6 22:20:24 2014 chauvo_t
 */
 
 #include <stdlib.h>
 #include <string.h>
 #include "../include/graph.h"
 
-t_graph_node            *add_node(struct s_graph *this, char *fct_name,
+t_graph_node		*add_node(struct s_graph *this, char *fct_name,
                                   t_graph_node *parent, int is_syscall)
 {
-  static t_graph_node   *current = NULL;
-  t_graph_node          *node;
-  static int            id = 0;
+  static t_graph_node	*current = NULL;
+  t_graph_node		*node;
+  static int		id = 0;
 
   if ((node = malloc(sizeof(t_graph_node))) == NULL)
     return (NULL);
@@ -40,9 +40,9 @@ t_graph_node            *add_node(struct s_graph *this, char *fct_name,
   return (current);
 }
 
-void            pop(struct s_graph *this)
+void		pop(struct s_graph *this)
 {
-  t_graph_node  *parent;
+  t_graph_node	*parent;
 
   parent = find_parent_node(this, this->current);
   if (parent == NULL)
@@ -56,7 +56,7 @@ void            pop(struct s_graph *this)
   this->current->next = NULL;
 }
 
-int             close_graph(struct s_graph *this)
+int	close_graph(struct s_graph *this)
 {
   fprintf(this->graph_file, "}\n");
   fclose(this->graph_file);
@@ -65,7 +65,7 @@ int             close_graph(struct s_graph *this)
   return (0);
 }
 
-int             create_graph(struct s_graph *this)
+int	create_graph(struct s_graph *this)
 {
   if ((this->graph_file = fopen("graph.dot", "w+")) == NULL)
     {
@@ -77,12 +77,12 @@ int             create_graph(struct s_graph *this)
           "node [shape=box, style=rounded, color=lightblue];\n");
   fprintf(this->graph_file, "rankdir=TB;\n");
   fprintf(this->graph_file, "label=\"Ftrace\";\n");
-  return(0);
+  return (0);
 }
 
-t_graph*        graph_init()
+t_graph		*graph_init()
 {
-  t_graph       *graph;
+  t_graph	*graph;
 
   if ((graph = malloc(sizeof(t_graph))) == NULL)
     {

@@ -5,7 +5,7 @@
 ## Login   <chauvo_t@epitech.net>
 ##
 ## Started on  Tue Apr  1 10:16:12 2014 chauvo_t
-## Last update Sun Jul  6 21:14:35 2014 chauvo_t
+## Last update Sun Jul  6 22:14:33 2014 chauvo_t
 ##
 
 CXX			:= gcc
@@ -23,6 +23,7 @@ HDRDIR			:= include
 SRCS			:=	main.c			\
 				graph.c			\
 				graph_utils.c		\
+				on_functions.c		\
 				print_syscalls.c	\
 				print_types.c		\
 				print_types2.c		\

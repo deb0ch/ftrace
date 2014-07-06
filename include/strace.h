@@ -5,7 +5,7 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon May 12 23:46:57 2014 chauvo_t
-** Last update Sun Jul  6 21:03:55 2014 chauvo_t
+** Last update Sun Jul  6 22:14:05 2014 chauvo_t
 */
 
 #ifndef STRACE_H_
@@ -55,10 +55,10 @@ typedef enum
 
 typedef struct	s_mapped_file
 {
-  int           fd;
+  int		fd;
   size_t	size;
   void		*content;
-  char          pathname[4096];
+  char		pathname[4096];
 }		t_mapped_file;
 
 typedef struct	s_signal
@@ -112,5 +112,9 @@ int	trace_process(pid_t pid, t_graph *graph);
 */
 int	load_file(t_mapped_file *file, char *file_name);
 int	map_by_pid(t_mapped_file *file, pid_t pid);
+int	on_function_call(struct user_regs_struct *registers,
+			 t_graph *graph, int *calling);
+int	on_function_ret(struct user_regs_struct *registers,
+			t_graph *graph, int *calling);
 
 #endif /* !STRACE_H_ */

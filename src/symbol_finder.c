@@ -5,20 +5,8 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Thu Jun  5 14:43:13 2014 chauvo_t
-** Last update Sat Jul  5 16:49:07 2014 chauvo_t
+** Last update Sun Jul  6 15:37:17 2014 bourge_i
 */
-
-#include <err.h>
-#include <fcntl.h>
-#include <gelf.h>
-#include <libelf.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sysexits.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
 #include "../include/symbol_finder.h"
 

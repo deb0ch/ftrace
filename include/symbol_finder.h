@@ -5,11 +5,23 @@
 ** Login   <chauvo_t@epitech.net>
 **
 ** Started on  Mon Jun 23 17:25:32 2014 chauvo_t
-** Last update Sat Jul  5 16:24:30 2014 chauvo_t
+** Last update Sun Jul  6 15:37:22 2014 bourge_i
 */
 
 #ifndef SYMBOL_FINDER_H_
 # define SYMBOL_FINDER_H_
+
+#include <err.h>
+#include <fcntl.h>
+#include <gelf.h>
+#include <libelf.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sysexits.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 typedef struct	s_libelf_data
 {

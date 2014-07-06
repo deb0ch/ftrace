@@ -5,7 +5,7 @@
 ## Login   <chauvo_t@epitech.net>
 ##
 ## Started on  Tue Apr  1 10:16:12 2014 chauvo_t
-## Last update Sun Jul  6 16:13:14 2014 chauvo_t
+## Last update Sun Jul  6 17:15:31 2014 bourge_i
 ##
 
 CXX			:= gcc
@@ -31,6 +31,7 @@ SRCS			:=	main.c			\
 				trace.c			\
 				launch_child.c		\
 				handle_exit.c		\
+				symbol_finder.c		\
 				types.c
 
 OBJS			:= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))

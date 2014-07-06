@@ -5,7 +5,7 @@
 ** Login   <max@epitech.net>
 ** 
 ** Started on  Wed Jul  2 14:02:24 2014 bourge_i
-** Last update Wed Jul  2 14:51:01 2014 bourge_i
+** Last update Sun Jul  6 15:41:02 2014 bourge_i
 */
 
 #include <stdlib.h>
@@ -58,3 +58,17 @@ char            *find_parent_name(t_graph *this, t_graph_node *node)
   else
     return (NULL);
 }
+
+t_graph_node    *find_parent_node(t_graph *this, t_graph_node *node)
+{
+  t_graph_node  *current;
+
+  current = this->graph_list;
+  while (current != NULL && current->id != node->parent_id)
+    current = current->next;
+  if (current != NULL && current->id != -1)
+    return (current);
+  else
+    return (NULL);
+}
+

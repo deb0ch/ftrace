@@ -5,7 +5,7 @@
 ** Login   <max@epitech.net>
 ** 
 ** Started on  Fri Jun 27 17:29:42 2014 bourge_i
-** Last update Sun Jul  6 17:05:42 2014 bourge_i
+** Last update Sun Jul  6 21:59:16 2014 bourge_i
 */
 
 #include <stdlib.h>
@@ -18,17 +18,15 @@ t_graph_node            *add_node(struct s_graph *this, char *fct_name,
   static t_graph_node   *current = NULL;
   t_graph_node          *node;
   static int            id = 0;
-  
+
   if ((node = malloc(sizeof(t_graph_node))) == NULL)
-    {
-      printf("MALLOC() Failed\n");
-      return (NULL);
-    }
+    return (NULL);
   node->id = id;
   node->fct_name = strdup(fct_name);
   node->parent_id = (parent) ? parent->id : -1;
   node->next = NULL;
-  fprintf(this->graph_file, "node [shape=box, style=rounded, color=%s];\n", (is_syscall) ? "red" : "lightblue");
+  fprintf(this->graph_file, "node [shape=box, style=rounded, color=%s];\n",
+          (is_syscall) ? "red" : "lightblue");
   fprintf(this->graph_file, "\"%s\" -> \"%s\";\n",
           (parent) ? parent->fct_name : "_START_", fct_name);
   if (current != NULL)
@@ -46,7 +44,6 @@ void            pop(struct s_graph *this)
 {
   t_graph_node  *parent;
 
-  printf("1\n");
   parent = find_parent_node(this, this->current);
   if (parent == NULL)
     {
@@ -55,9 +52,7 @@ void            pop(struct s_graph *this)
     }
   free(this->current->fct_name);
   free(this->current);
-  printf("2\n");
   this->current = parent;
-  printf("3\n");
   this->current->next = NULL;
 }
 
@@ -78,7 +73,8 @@ int             create_graph(struct s_graph *this)
       return (-1);
     }
   fprintf(this->graph_file, "strict digraph{\n");
-  fprintf(this->graph_file, "node [shape=box, style=rounded, color=lightblue];\n");
+  fprintf(this->graph_file,
+          "node [shape=box, style=rounded, color=lightblue];\n");
   fprintf(this->graph_file, "rankdir=TB;\n");
   fprintf(this->graph_file, "label=\"Ftrace\";\n");
   return(0);
